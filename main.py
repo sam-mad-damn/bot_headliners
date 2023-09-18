@@ -1,4 +1,5 @@
 from bd import *
+from newsapi import NewsApiClient
 import sqlite3
 from config import *
 import telebot
@@ -140,14 +141,12 @@ def callback_inline(call):
                 # посмотреть новости категории
                 elif call.data == f"{v}":
                     bot.send_message(call.message.chat.id,f"Новости категории '{n}':")
-                    url = ('https://newsapi.org/v2/top-headlines?'
-                           'country=ru&'
-                           f'category={v}&'
-                           'pageSize=3&'
-                           f'apiKey={key_news}'
-                           )
+                    newsapi = NewsApiClient(api_key=f'{key_news}')
+                    news=newsapi.get_top_headlines(category=f'{v}',
+                                              language='ru',
+                                              country='ru',
+                                              page_size=3)
                     # получаем словарь dict
-                    news = requests.get(url).json()
                     for i in news['articles']:
                         bot.send_message(call.message.chat.id, f"{i['title']}\n{i['url']}")
 
