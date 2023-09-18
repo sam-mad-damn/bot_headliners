@@ -17,7 +17,7 @@ bot = telebot.TeleBot(key_tg, parse_mode=None)
 # запускают функцию "отправить приветствие"
 def send_welcome(message):
     # добавление пользователя в базу данных
-    con = sqlite3.connect(r"C:\Users\Анастасия\PycharmProjects\bot headliners\db.db")
+    con = sqlite3.connect(r"\db.db")
     registration(con, con.cursor(), message.from_user.id)
 
     # клавиатура навигации в боте
@@ -43,7 +43,7 @@ def news_work(message):
             markup = types.InlineKeyboardMarkup(row_width=3)
 
             # берем из базы словарь всех категорий
-            categories = get_all_categories(sqlite3.connect(r"C:\Users\Анастасия\PycharmProjects\bot headliners\db.db").cursor())
+            categories = get_all_categories(sqlite3.connect(r"\db.db").cursor())
             print(categories)
             for k, n, v in categories:
                 # создаем нужное кол-во кнопок под категории
@@ -54,7 +54,7 @@ def news_work(message):
 
         elif message.text == "Посмотреть новости по своим подпискам":
             # получаем подписки юзера
-            subscribes = get_subscribes(sqlite3.connect(r"C:\Users\Анастасия\PycharmProjects\bot headliners\db.db").cursor(),
+            subscribes = get_subscribes(sqlite3.connect(r"\db.db").cursor(),
                                              message.from_user.id)
 
             # вывод массива с подписками пользователя из базы
@@ -77,7 +77,7 @@ def news_work(message):
 
         elif message.text == "Отписаться от категории новостей":
             # получаем подписки юзера
-            subscribes = get_subscribes(sqlite3.connect(r"C:\Users\Анастасия\PycharmProjects\bot headliners\db.db").cursor(),
+            subscribes = get_subscribes(sqlite3.connect(r"\db.db").cursor(),
                                              message.from_user.id)
 
             # вывод массива с подписками пользователя из базы
@@ -101,11 +101,11 @@ def callback_inline(call):
     try:
         if call.message:
             # работа непосредственно с новостными категориями
-            categories = get_all_categories(sqlite3.connect(r"C:\Users\Анастасия\PycharmProjects\bot headliners\db.db").cursor())
+            categories = get_all_categories(sqlite3.connect(r"\db.db").cursor())
             for k, n, v in categories:
                 # если мы выбирали действие "подписаться"
                 if call.data == f"sub{v}":
-                    sub = subscribe(sqlite3.connect(r"C:\Users\Анастасия\PycharmProjects\bot headliners\db.db"), call.from_user.id,
+                    sub = subscribe(sqlite3.connect(r"\db.db"), call.from_user.id,
                                     k)
                     print(sub)
                     if sub:
@@ -127,7 +127,7 @@ def callback_inline(call):
 
                 # если мы выбирали "отписаться"
                 elif call.data == f"del{v}":
-                    unsub = unsubscribe(sqlite3.connect(r"C:\Users\Анастасия\PycharmProjects\bot headliners\db.db"),
+                    unsub = unsubscribe(sqlite3.connect(r"\db.db"),
                                         call.from_user.id, k)
                     if unsub:
                         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
