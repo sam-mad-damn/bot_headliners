@@ -2,7 +2,7 @@
 import sqlite3
 
 # создали подключение к бд. если такой базы нет, то она создастся сама
-con = sqlite3.connect(r"\db.db")
+con = sqlite3.connect(r"db.db")
 # создали курсор для запросов
 cursor = con.cursor()
 # создали таблицу users в базе, если она еще не существует
