@@ -28,8 +28,7 @@ if categories.keys()-table_categories.keys() != set():
 # создаем таблицу subscribes в базе, если она еще не существует
 cursor.execute(
     '''CREATE TABLE IF NOT EXISTS "subscribes"(user_id INTEGER, category_id INTEGER);''')
-# cursor.execute(
-#     '''DROP TABLE "subscribes"''')
+
 # зафиксировали изменения в базе
 con.commit()
 # закрыли подключение

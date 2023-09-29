@@ -44,7 +44,6 @@ def news_work(message):
 
             # берем из базы словарь всех категорий
             categories = get_all_categories(sqlite3.connect(r"db.db").cursor())
-            print(categories)
             for k, n, v in categories:
                 # создаем нужное кол-во кнопок под категории
                 btn = types.InlineKeyboardButton(f"{n}", callback_data=f"sub{v}")
@@ -107,7 +106,7 @@ def callback_inline(call):
                 if call.data == f"sub{v}":
                     sub = subscribe(sqlite3.connect(r"db.db"), call.from_user.id,
                                     k)
-                    print(sub)
+
                     if sub:
                         markup = types.InlineKeyboardMarkup(row_width=2)
                         btn = types.InlineKeyboardButton("Смотреть новости", callback_data=f"{v}")
