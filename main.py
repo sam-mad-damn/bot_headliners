@@ -146,6 +146,7 @@ def callback_inline(call):
                                               language='ru',
                                               country='ru',
                                               page_size=3)
+
                     # получаем словарь dict
                     for i in news['articles']:
                         bot.send_message(call.message.chat.id, f"{i['title']}\n{i['url']}")
